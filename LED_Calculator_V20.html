@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Калькулятор для расчёта LED-экранов. Подбор типа экрана, шага пикселя, размеров, разрешения, электропотребления, состава и ориентировочного срока сборки.">
+<title>Калькулятор для расчёта LED-экранов</title>
+<style>
+:root{--black:#0b0c0f;--ink:#141519;--white:#fff;--gray:#6b707b;--line:#dfe2e7;--soft:#f4f5f7;--dark2:#17191e}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f6f8;color:var(--ink);line-height:1.45}.nav{height:72px;background:var(--black);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;position:sticky;top:0;z-index:10}.nav strong{font-size:13px;letter-spacing:.08em;text-transform:uppercase}.nav span{font-size:11px;color:#9da2ad}.wrap{max-width:1500px;margin:auto;padding:50px 5vw}.hero{background:var(--black);color:#fff;padding:70px 5vw 80px}.hero h1{font-size:clamp(42px,6vw,82px);line-height:.96;letter-spacing:-.055em;max-width:850px;margin:15px 0}.hero p{max-width:720px;color:#aeb2bc;font-size:16px}.tag{font-size:11px;font-weight:800;letter-spacing:.18em;color:#aeb2bc;text-transform:uppercase}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px}.step{display:flex;gap:12px;align-items:center;margin:0 0 22px}.step i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#eef0f4;color:#6259ff;font-size:10px;font-weight:800}.step b{font-size:16px}.field{margin:0 0 22px}.field label{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#5e6470;margin-bottom:8px}.field select,.field input{width:100%;height:52px;border:1px solid #d9dce2;border-radius:14px;background:#fff;padding:0 15px;font-size:14px;color:#17181c;outline:none}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:11px;color:#7a808c;margin-top:8px}.recommend{padding:13px 15px;border:1px solid #dcd9ff;background:#f5f4ff;border-radius:14px;font-size:12px;color:#565b67}.result{background:var(--black);color:#fff;border-radius:24px;padding:30px;position:sticky;top:92px;height:max-content}.result .label{font-size:10px;letter-spacing:.16em;color:#8e949f;font-weight:800;text-transform:uppercase}.result h2{font-size:20px;line-height:1.2;margin:10px 0 18px;letter-spacing:-.02em;color:#c9cdd5;font-weight:650}.pricebox{border:1px solid #3b3f47;border-radius:18px;padding:18px;margin:0 0 18px;background:#121419}.pricebox span{display:block;color:#9ba0aa;font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}.pricebox b{display:block;font-size:clamp(34px,4vw,54px);line-height:1.05;letter-spacing:-.045em}.pricebox small{display:block;color:#777d87;font-size:10px;margin-top:5px}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fact{border:1px solid #30333a;border-radius:15px;padding:16px}.fact span{display:block;color:#858b96;font-size:10px;margin-bottom:6px}.fact b{font-size:14px}.details{margin-top:12px;border-radius:18px;background:#17191e;padding:20px}.details .line{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #292c33;padding:9px 0;font-size:12px}.details .line:last-child{border-bottom:0}.details .line span{color:#8f949e}.bom{margin-top:14px}.bom h3{font-size:13px;margin:0 0 10px}.bom ul{list-style:none;margin:0;padding:0}.bom li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #292c33;font-size:11px}.bom li span{color:#a7abb4}.section{padding:75px 5vw}.section h2{font-size:clamp(34px,4vw,58px);line-height:1;letter-spacing:-.05em;margin:8px 0 35px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;min-height:200px}.card b{font-size:16px}.card p{font-size:12px;color:var(--gray)}.black{background:var(--black);color:#fff}.black .card{background:var(--dark2);border-color:#30333a}.black .card p{color:#a8adb7}.qa{display:grid;grid-template-columns:1fr 1fr;gap:12px}.qa details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.qa summary{font-weight:700;font-size:13px;cursor:pointer}.qa p{font-size:12px;color:var(--gray);margin-bottom:0}.method{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.method .card{min-height:160px}.footer{background:var(--black);color:#fff;padding:45px 5vw;font-size:11px;color:#9da2ad}.notice{background:#fff8e7;border:1px solid #ead9a8;color:#665522;border-radius:16px;padding:14px;font-size:11px;margin-top:14px}
+@media(max-width:950px){.grid{grid-template-columns:1fr}.result{position:static}.cards,.method{grid-template-columns:1fr 1fr}.qa{grid-template-columns:1fr}}@media(max-width:600px){.row,.facts,.cards,.method{grid-template-columns:1fr}.hero{padding-top:50px}.wrap,.section{padding-left:4vw;padding-right:4vw}.panel,.result{padding:20px}}
+</style>
+</head>
+<body>
+<header class="nav"><strong>Калькулятор для расчёта LED-экранов</strong></header>
+<section class="hero"><div class="wrap" style="padding:0"><div class="tag">LED DISPLAY CALCULATOR</div><h1>Рассчитайте экран<br>понятно и по составу.</h1><p>Выберите место установки, конструкцию, шаг пикселя и размеры. Калькулятор покажет фактический размер по сетке, разрешение, количество пикселей, электропотребление, состав оборудования и ориентировочный срок сборки.</p></div></section>
+<main class="wrap"><div class="grid">
+<section class="panel">
+<div class="step"><i>01</i><b>Тип экрана</b></div>
+<div class="field"><label>Где будет работать экран?</label><select id="type"><option value="indoor">Indoor — для помещений</option><option value="premium">Indoor Premium — Absen</option><option value="outdoor">Outdoor — для улицы</option><option value="rental">Арендный — для мероприятий</option></select></div>
+<div class="step"><i>02</i><b>Конструкция</b></div>
+<div class="field"><label>Сборка</label><select id="build"></select><div id="buildHint" class="hint"></div></div>
+<div class="field"><label>Шаг пикселя</label><select id="pitch"></select><div id="pitchHint" class="hint"></div></div>
+<div class="step"><i>03</i><b>Формат и размер</b></div>
+<div class="field"><label>Формат</label><select id="format"><option value="free">Свободный размер</option><option value="16:9">16:9 — стандартный формат</option><option value="9:16">9:16 — вертикальный формат</option></select><div class="hint">Формат — рекомендация для контента. Вы можете выбрать свободный размер, если объект этого требует.</div></div>
+<div class="row"><div class="field"><label>Желаемая ширина, м</label><input id="w" type="number" min="0.32" step="0.01" value="3.5"></div><div class="field"><label>Желаемая высота, м</label><input id="h" type="number" min="0.16" step="0.01" value="2"></div></div>
+<div id="recommend" class="recommend"></div>
+<div class="step" style="margin-top:28px"><i>04</i><b>Размещение</b></div>
+<div class="field"><label>Где будет установлен экран?</label><select id="mount"><option value="wall">На стене / фасаде</option><option value="stand">Отдельно стоящая конструкция</option><option value="truss">Ферма / временная конструкция</option></select></div>
+<div class="step"><i>05</i><b>Система управления</b></div>
+<div class="field"><label>Как будет подаваться контент?</label><select id="control"><option value="sync">Синхронное управление</option><option value="async">Асинхронное управление</option></select><div id="controlHint" class="hint"></div></div>
+</section>
+<section class="result"><div class="label">Результат расчёта</div><div class="pricebox"><span>Стоимость для проекта</span><b id="totalPrice">—</b><small>Итоговая расчётная стоимость LED-экрана</small><div id="priceCheck" style="margin-top:10px;font-size:11px;color:#7f8792"></div></div><h2 id="size">—</h2><div class="facts"><div class="fact"><span>Фактический размер</span><b id="actual">—</b></div><div class="fact"><span>Площадь</span><b id="area">—</b></div><div class="fact"><span>Разрешение</span><b id="resolution">—</b></div><div class="fact"><span>Всего пикселей</span><b id="pixels">—</b></div><div class="fact"><span>Макс. потребление</span><b id="maxPower">—</b></div><div class="fact"><span>Среднее потребление</span><b id="avgPower">—</b></div><div class="fact"><span>Срок службы</span><b>100 000 часов</b></div><div class="fact"><span>Сборка / установка</span><b id="time">—</b></div></div><div class="details"><div class="line"><span>Тип</span><b id="rType">—</b></div><div class="line"><span>Сборка</span><b id="rBuild">—</b></div><div class="line"><span>Pixel Pitch</span><b id="rPitch">—</b></div><div class="line"><span>Размещение</span><b id="rMount">—</b></div><div class="line"><span>Управление</span><b id="rControl">—</b></div><div class="line"><span>Обслуживание</span><b id="service">—</b></div><div class="bom"><h3>Состав экрана</h3><ul id="bom"></ul></div></div><div class="notice">Расчёт предназначен для предварительного подбора. Перед закупкой и производством необходимо проверить точную модель модуля, кабинета, блока питания, приёмной карты, контроллера, кабелей, нагрузку по пикселям и конструкцию по объекту.</div></section>
+</div></main>
+<section class="section black"><div class="wrap" style="padding-top:0;padding-bottom:0"><div class="tag">01 / МЕТОДИЧКА</div><h2>Что именно вы предлагаете клиенту?</h2><div class="cards">
+<div class="card"><b>LED-экран</b><p>Большой светодиодный дисплей, который собирается из множества LED-модулей или готовых кабинетов. Его размер и разрешение формируются под конкретный объект.</p></div>
+<div class="card"><b>Шаг пикселя</b><p>P2.5, P3.076, P3.91, P5 и т.д. — расстояние между соседними пикселями. Чем меньше шаг, тем выше детализация при той же площади и тем ближе комфортный просмотр.</p></div>
+<div class="card"><b>Модульная сборка</b><p>Экран собирается из отдельных LED-модулей на основании. Такой вариант удобен для нестандартных размеров и специальных конструкций.</p></div>
+<div class="card"><b>Кабинетная сборка</b><p>Модули устанавливаются в готовые кабинеты. Кабинеты соединяются между собой в единый экран. Для улицы это типовой вариант для рекламных экранов: быстрее монтаж и удобнее обслуживание.</p></div>
+<div class="card"><b>Синхронное управление</b><p>Контент поступает на экран в реальном времени с компьютера или другого источника. Подходит для видео, презентаций, трансляций и динамического контента.</p></div>
+<div class="card"><b>Асинхронное управление</b><p>Контроллер хранит контент и воспроизводит его самостоятельно по заданному сценарию. Удобно для рекламных роликов и расписаний, когда постоянное подключение компьютера не требуется.</p></div>
+</div></div></section>
+<section class="section"><div class="wrap" style="padding-top:0;padding-bottom:0"><div class="tag">02 / ВОПРОСЫ КЛИЕНТУ</div><h2>Что нужно спросить перед расчётом</h2><div class="qa">
+<details open><summary>Где будет установлен экран?</summary><p>В помещении, на фасаде, на улице или на временной конструкции? От этого зависят тип защиты, яркость, конструкция и обслуживание.</p></details>
+<details><summary>На каком расстоянии будут смотреть?</summary><p>Уточните минимальное и обычное расстояние до зрителя. Это помогает выбрать шаг пикселя.</p></details>
+<details><summary>Какой нужен размер?</summary><p>Спросите ширину и высоту места установки. Если есть чертёж или фото с размерами — попросите его.</p></details>
+<details><summary>Что будет показываться?</summary><p>Реклама, текст, презентации, камеры, трансляции, спортивный контент или смешанный контент.</p></details>
+<details><summary>Экран будет постоянно подключён к компьютеру?</summary><p>Если да — чаще рассматривают синхронную систему. Если экран должен работать самостоятельно по расписанию — рассматривают асинхронную.</p></details>
+<details><summary>Как обслуживать экран?</summary><p>Уточните, есть ли доступ спереди или сзади. Это влияет на конструкцию и удобство будущего ремонта.</p></details>
+<details><summary>Нужна ли конструкция?</summary><p>Спросите: есть ли готовая несущая конструкция или её нужно проектировать и изготавливать.</p></details>
+<details><summary>Есть ли ограничения по электропитанию?</summary><p>Нужно заранее понимать доступную мощность, место установки щита и длину кабельной трассы.</p></details>
+</div></div></section>
+<section class="section" style="background:#e9ebef"><div class="wrap" style="padding-top:0;padding-bottom:0"><div class="tag">03 / СОСТАВ</div><h2>Из чего состоит LED-экран</h2><div class="method">
+<div class="card"><b>LED-модули</b><p>Формируют изображение. Содержат светодиоды, драйверные микросхемы и разъёмы.</p></div><div class="card"><b>Кабинеты / основание</b><p>Механическая основа, на которой фиксируются модули и размещается электроника.</p></div><div class="card"><b>Блоки питания</b><p>Преобразуют сетевое питание в низковольтное питание LED-модулей.</p></div><div class="card"><b>Приёмные карты</b><p>Получают цифровые данные и распределяют изображение по модулям.</p></div><div class="card"><b>Контроллер</b><p>Принимает контент от источника и формирует поток данных для LED-экрана.</p></div><div class="card"><b>Кабели и коммутация</b><p>Силовые и сигнальные кабели, коннекторы, распределение питания и данных.</p></div><div class="card"><b>Конструкция</b><p>Металлическое основание, рама, ферма или фасадная система — в зависимости от объекта.</p></div><div class="card"><b>Запасные части</b><p>Рекомендуется предусматривать запасные модули и необходимые элементы для оперативного ремонта.</p></div></div></div></section>
+<footer class="footer"><b>Калькулятор для расчёта LED-экранов</b><br><br>Предварительный расчёт LED-экрана для проектной оценки. Итоговая спецификация уточняется после проверки объекта и выбранной конфигурации.</footer>
+<script>
+
+(()=>{
+const $=id=>document.getElementById(id);
+const els={type:$('type'),build:$('build'),pitch:$('pitch'),format:$('format'),w:$('w'),h:$('h'),control:$('control'),mount:$('mount')};
+const DATA={
+ indoor:{label:'Indoor',builds:{
+  module:{label:'Модульная',pitches:{
+   'P4':{mw:.256,mh:.256,pxw:64,pxh:64,modulePrice:5300,psuDiv:6,psuPrice:2800,spare:4,cardPrice:5700,installMode:'indoorModule'},
+   'P2.5':{mw:.32,mh:.16,pxw:128,pxh:64,modulePrice:7700,psuDiv:6,psuPrice:3000,spare:3,cardPrice:5200,profile:38000,corners:1100,ironUnit:1500,magnetPrice:28,magPerModule:4,installMode:'indoorModule'},
+   'P2':{mw:.32,mh:.16,pxw:160,pxh:80,modulePrice:10200,psuDiv:6,psuPrice:3000,spare:3,cardPrice:5700,installMode:'indoorModule'},
+   'P1.86':{mw:.32,mh:.16,pxw:172,pxh:86,modulePrice:11000,psuDiv:6,psuPrice:3000,spare:3,cardPrice:5700,installMode:'indoorModule'},
+   'P1.53':{mw:.32,mh:.16,pxw:209,pxh:104,modulePrice:17700,psuDiv:6,psuPrice:3000,spare:3,cardPrice:5700,installMode:'indoorModule'},
+   'P1.25':{mw:.32,mh:.16,pxw:256,pxh:128,modulePrice:29600,psuDiv:6,psuPrice:3000,spare:3,cardPrice:5700,installMode:'indoorModule'}
+  }},
+  cabinet:{label:'Кабинетная',pitches:{
+   'P4':{cw:.768,ch:.768,pxw:192,pxh:192,modulePrice:5300,modulesPerCab:9,psuDiv:6,psuPrice:3000,cardPrice:6700,cabinetPrice:26800,spare:3},
+   'P2.5':{cw:.64,ch:.64,pxw:256,pxh:256,modulePrice:7700,modulesPerCab:8,psuDiv:6,psuPrice:3000,cardPrice:6700,cabinetPrice:26800,spare:4},
+   'P2':{cw:.64,ch:.64,pxw:320,pxh:320,modulePrice:10200,modulesPerCab:8,psuDiv:6,psuPrice:3000,cardPrice:6700,cabinetPrice:26800,spare:3},
+   'P1.86':{cw:.64,ch:.64,pxw:344,pxh:344,modulePrice:11000,modulesPerCab:8,psuDiv:6,psuPrice:3000,cardPrice:6700,cabinetPrice:26800,spare:3},
+   'P1.53':{cw:.64,ch:.64,pxw:418,pxh:418,modulePrice:17700,modulesPerCab:8,psuDiv:6,psuPrice:3000,cardPrice:6700,cabinetPrice:26800,spare:3}
+  }}
+ }},
+ premium:{label:'Indoor Premium',builds:{
+  cabinet:{label:'Кабинетная',pitches:{
+   'P2.5':{family:'Absen CPS2.5',cw:.32,ch:.48,pxw:128,pxh:192,completePerCab:41700,spareCab:2,powerMaxM2:360,powerAvgM2:120,premium:true},
+   'P1.8':{family:'Absen CPS1.8',cw:.32,ch:.48,pxw:172,pxh:256,completePerCab:55800,spareCab:2,powerMaxM2:360,powerAvgM2:120,premium:true},
+   'P1.25':{family:'Absen KLCOB1.2 V2',cw:.6,ch:.3375,pxw:480,pxh:270,completePerCab:999400,powerMaxM2:null,powerAvgM2:null,premium:true}
+  }}
+ }},
+ outdoor:{label:'Outdoor',builds:{
+  cabinet:{label:'Кабинетная',pitches:{
+   'P8':{cw:.96,ch:.96,pxw:120,pxh:120,modulePrice:6900,modulesPerCab:18,psuPerCab:5,cardPrice:5560,cabinetPrice:60000,processor:45000,spare:4},
+   'P5':{cw:.96,ch:.96,pxw:192,pxh:192,modulePrice:7200,modulesPerCab:18,psuPerCab:5,cardPrice:5560,cabinetPrice:60000,processor:105000,spare:4},
+   'P4':{cw:.96,ch:.96,pxw:240,pxh:240,modulePrice:7300,modulesPerCab:18,psuPerCab:5,cardPrice:5560,cabinetPrice:60000,processor:105000,spare:4},
+   'P3.076':{cw:.96,ch:.96,pxw:312,pxh:312,modulePrice:13200,modulesPerCab:18,psuPerCab:5,cardPrice:5560,cabinetPrice:60000,processor:105000,spare:4},
+   'P2.5':{cw:.96,ch:.96,pxw:384,pxh:384,modulePrice:19800,modulesPerCab:18,psuPerCab:5,cardPrice:5560,cabinetPrice:60000,processor:105000,spare:4}
+  }},
+  module:{label:'Модульная',pitches:{
+   'P5':{mw:.32,mh:.16,pxw:64,pxh:32,modulePrice:7200,psuDiv:4,psuPrice:2800,spare:4,cardPrice:5800,installMode:'outdoorModule'},
+   'P4':{mw:.32,mh:.16,pxw:80,pxh:40,modulePrice:7300,psuDiv:4,psuPrice:2800,spare:4,cardPrice:5800,installMode:'outdoorModule'},
+   'P3.076':{mw:.32,mh:.16,pxw:104,pxh:52,modulePrice:13200,psuDiv:4,psuPrice:2800,spare:4,cardPrice:5800,installMode:'outdoorModule'},
+   'P2.5':{mw:.32,mh:.16,pxw:128,pxh:64,modulePrice:19800,psuDiv:4,psuPrice:2800,spare:4,cardPrice:5800,installMode:'outdoorModule'}
+  }}
+ }},
+ rental:{label:'Арендный',builds:{cabinet:{label:'Кабинетная',pitches:{'P3.91':{cw:.5,ch:1,pxw:128,pxh:256,psuPerCab:2,rentalM2:265000}}}}}
+};
+const MARKUP=1.20;
+// Dealer p.2 distinguishes RGB SLIM 200W (2800) from monochrome 200W
+// (3000). All Indoor modules here are RGB; preserve divisor/power assumptions.
+for(const build of Object.values(DATA.indoor.builds)){
+ for(const pitch of Object.values(build.pitches))pitch.psuPrice=2800;
+}
+// V20: dealer prices, September 2026; select a priced controller by actual pixels.
+// Indoor P4 defaults use the latest 17x10 estimate (R712, not R716).
+// Explicit assumptions requiring confirmation: 4 magnets per working module;
+// reserve 2 below 200 modules, 4 from 200; no unsupported growth to 10.
+// User-confirmed installation rates: wall 40,000/m² for any modular screen;
+// indoor freestanding modular screen 45,000/m². No rounding step or minimum.
+const MODULE_INSTALL={wallRatePerM2:40000,indoorStandRatePerM2:45000};
+const INDOOR_P4_RULES={
+ modulePrice:5300,cardPrice:5700,profilePrice:9500,
+ cornerPrice:250,ironPrice:2000,psuPrice:2800,magnetPrice:28,
+ magnetsPerWorkingModule:4,reserveThreshold:200,smallReserve:2,largeReserve:4
+};
+// Huidu receivers stay paired with Huidu sending equipment. Basic sync mode
+// requires no extra inputs/layers/4G: choose the lowest-priced adequate model.
+// Prices: supplied dealer PDF, pp.3-4. Width/height limits: Huidu specifications.
+// VP8000M is modular: the PDF does not identify its installed output-card set,
+// so do not assume the chassis price is a complete >10.4M-pixel configuration.
+const CONTROL_CATALOG={
+ sync:[
+  {name:'HD-VP210S',price:39300,pixels:1300000,width:3840,height:2500},
+  {name:'HD-VP410S',price:69400,pixels:2600000,width:3840,height:2500},
+  {name:'HD-VP620',price:153700,pixels:3900000,width:8000,height:4000},
+  {name:'HD-VP820',price:217400,pixels:5200000,width:8000,height:4000},
+  {name:'HD-VP820A',price:252500,pixels:5200000,width:8192,height:4000},
+  {name:'HD-VP1240A',price:341800,pixels:7800000,width:16000,height:4000},
+  {name:'HD-VP1620S',price:315500,pixels:10400000,width:16000,height:4000},
+  {name:'HD-VP1640A',price:401600,pixels:10400000,width:16000,height:4000}
+ ],
+ // A3-A6 (not the differently named A3L-A6L) are limited to rectangles
+ // explicitly listed in the dealer PDF; unconfirmed shapes are not assumed.
+ // A7/A8 asynchronous ceilings use the manufacturer's 5.16M / 8.29M,
+ // rather than rounded dealer descriptions 5.2M / 8.3M.
+ async:[
+  {name:'HD-A3 + Wi-Fi',price:40000,pixels:524288,rectangles:[[1024,512],[2048,256],[3840,128],[256,2048]]},
+  {name:'HD-A4 + Wi-Fi',price:95800,pixels:655360,rectangles:[[1280,512],[2048,256],[3840,128],[256,2048]]},
+  {name:'HD-A5 + Wi-Fi',price:90500,pixels:1310720,rectangles:[[1280,1024],[2048,256],[3840,128],[256,2048]]},
+  {name:'HD-A6 + Wi-Fi',price:137900,pixels:2097152,rectangles:[[2048,1024],[2048,256],[3840,128],[256,2048]]},
+  {name:'HD-A7 + Wi-Fi',price:546900,pixels:5160000,width:65536,height:8192},
+  {name:'HD-A8 + Wi-Fi',price:786300,pixels:8290000,width:65536,height:8192}
+ ]
+};
+function controllerFits(model,pxW,pxH){
+ if(pxW*pxH>model.pixels)return false;
+ if(model.rectangles)return model.rectangles.some(([w,h])=>pxW<=w&&pxH<=h);
+ return pxW<=model.width&&pxH<=model.height;
+}
+// Current conventional-chip recommendation: R712 128x1024; R708 128x512.
+// R708 tariff 5200 = user bundle tariff 10900 minus R712 tariff 5700.
+function receiverLayout(g,baseGroups,basePrice,isP4){
+ const height=g.rows*g.d.pxh,width=g.cols*g.d.pxw;
+ // Keep whole-module column groups. Wider modules use a conservative
+ // 256x512 region (131072 pixels), not a cut through a physical module.
+ const regionWidth=isP4||g.d.pxw<=128?128:256;
+ const regionHeight=regionWidth===128?1024:512;
+ const groups=Math.max(baseGroups,Math.ceil(width/regionWidth));
+ const full=Math.floor(height/regionHeight),tail=height%regionHeight;
+ let mainBands=full,extraBands=0;
+ if(!full)mainBands=1;
+ else if(tail>512||regionWidth>128&&tail>0)mainBands++;
+ else if(tail>0)extraBands=1;
+ const main=groups*mainBands,extra=groups*extraBands;
+ return {main,extra,groups,count:main+extra,cost:main*basePrice+extra*5200,
+  name:isP4?'R712'+(extra?' + R708':''):'Приёмные карты'+(extra?' + R708':''),
+  coveredHeight:mainBands*regionHeight+extraBands*512,coveredWidth:groups*regionWidth,
+  regionWidth,regionHeight};
+}
+function controlSelection(pxW,pxH,mode){
+ const candidates=(CONTROL_CATALOG[mode]||[]).filter(m=>controllerFits(m,pxW,pxH))
+  .sort((a,b)=>a.price-b.price||a.pixels-b.pixels);
+ if(candidates.length){
+  const selected=candidates[0];
+  return {...selected,valid:true};
+ }
+ const async=mode==='async';
+ return {price:0,name:(async?'Асинхронное управление':'Управление')+' — подбор по проекту',valid:false,
+  reason:async?'Разрешение или габариты превышают подтверждённые возможности асинхронных моделей из прайса. Нужна проектная конфигурация.':
+   'Разрешение или габариты превышают подтверждённые возможности моноблочных процессоров из прайса. Нужна конфигурация HD-VP8000M или проектная система.'};
+}
+function modularInstallation(area,type,mount){
+ if(!Number.isFinite(area)||area<=0)throw new Error('Некорректная площадь для монтажа');
+ const rate=type==='indoor'&&mount==='stand'
+  ?MODULE_INSTALL.indoorStandRatePerM2:MODULE_INSTALL.wallRatePerM2;
+ return area*rate;
+}
+function indoorP4Estimate(g,mount){
+ const area=g.aw*g.ah,workingModules=g.units;
+ const rules=INDOOR_P4_RULES;
+ const spare=workingModules<rules.reserveThreshold?rules.smallReserve:rules.largeReserve;
+ const totalModules=workingModules+spare;
+ const psu=Math.ceil(workingModules/6);           // Stored spares do not consume operating power.
+ const receiving=receiverLayout(g,Math.ceil(g.cols/2),rules.cardPrice,true);
+ const cards=receiving.count;
+ const control=controlSelection(g.cols*g.d.pxw,g.rows*g.d.pxh,els.control.value);
+ const profileQty=Math.ceil(2*(g.aw+g.ah)/6);       // Full perimeter / six-metre stock length.
+ const cornerQty=4;
+ const ironQty=g.cols+1;
+ const magnetQty=workingModules*rules.magnetsPerWorkingModule;
+ const costs={
+  modules:totalModules*rules.modulePrice,
+  cards:receiving.cost,
+  psu:psu*rules.psuPrice,
+  controller:control.price,
+  aluminium:profileQty*rules.profilePrice,
+  corners:cornerQty*rules.cornerPrice,
+  iron:ironQty*rules.ironPrice,
+  magnets:magnetQty*rules.magnetPrice,
+  installation:modularInstallation(area,'indoor',mount)
+ };
+ const base=Object.values(costs).reduce((sum,value)=>sum+value,0);
+ return {spare,psu,cards,profileQty,cornerQty,ironQty,magnetQty,receiving,control,costs,base};
+}
+function validNum(v,fallback){v=Number(v);return Number.isFinite(v)&&v>0?Math.min(v,100):fallback}
+function populateBuild(){
+ const bs=DATA[els.type.value].builds; els.build.innerHTML='';
+ Object.entries(bs).forEach(([k,v])=>els.build.add(new Option(v.label,k)));
+ populatePitch();
+}
+function populatePitch(){
+ const ps=DATA[els.type.value].builds[els.build.value].pitches; els.pitch.innerHTML='';
+ Object.keys(ps).forEach(k=>els.pitch.add(new Option(k,k)));
+ calc();
+}
+function grid(){
+ const d=DATA[els.type.value].builds[els.build.value].pitches[els.pitch.value];
+ let W=validNum(els.w.value,5),H=validNum(els.h.value,3);
+ if(els.format.value==='16:9')H=W*9/16;
+ if(els.format.value==='9:16')H=W*16/9;
+ const ux=d.cw||d.mw,uy=d.ch||d.mh;
+ let cols=Math.max(1,Math.round(W/ux)),rows=Math.max(1,Math.round(H/uy));
+ return {d,cols,rows,units:cols*rows,aw:cols*ux,ah:rows*uy};
+}
+function installCabinet(area){
+ // From supplied cabinet estimates: 13.824m²→1.4m; 16.5888→1.7m; 25.8048→2.6m ≈100k/m²
+ return Math.ceil(area)*100000;
+}
+function novaProcessor(px){
+ const list=[
+  {max:1300000,name:'NovaStar V760',price:63200},
+  {max:2600000,name:'NovaStar V960',price:109300},
+  {max:3900000,name:'NovaStar V1060',price:259600},
+  {max:6500000,name:'NovaStar V1160',price:398500},
+  {max:10400000,name:'NovaStar V1260',price:925700}
+ ];
+ return list.find(x=>px<=x.max)||{max:Infinity,name:'NovaStar V1260 × '+Math.ceil(px/10400000),price:925700*Math.ceil(px/10400000)};
+}
+
+function premiumControl(px,mode){
+ if(mode==='sync'){
+   const vp=novaProcessor(px);
+   return {name:vp.name,price:vp.price,player:'',processor:vp.name};
+ }
+ if(px<=1300000){
+   return {name:'NovaStar TB40',price:96600,player:'NovaStar TB40',processor:''};
+ }
+ if(px<=2300000){
+   return {name:'NovaStar TB60',price:242000,player:'NovaStar TB60',processor:''};
+ }
+ const vp=novaProcessor(px);
+ return {
+   name:'NovaStar TB40 + '+vp.name,
+   price:96600+vp.price,
+   player:'NovaStar TB40',
+   processor:vp.name
+ };
+}
+
+function compute(){
+ const g=grid(),d=g.d,t=els.type.value,b=els.build.value,p=els.pitch.value,area=g.aw*g.ah;
+ const pxW=g.cols*d.pxw,pxH=g.rows*d.pxh,totalPx=pxW*pxH;
+ let workingModules=0,spare=d.spare||0,psu=0,cards=0,base=0,processorName='',maxPowerW=0,avgPowerW=0,breakdown=null,installation=null,control=null,receiving=null;
+ if(t==='premium'){
+   const pc=premiumControl(totalPx,els.control.value); processorName=pc.name;
+   cards=0; // CPS / KLCOB считаются как готовые заводские панели; отдельные receiving cards не добавляем.
+   const premiumQty=g.units+(d.spareCab||0);
+   base=premiumQty*d.completePerCab;
+
+   // Монтаж Premium: 40 000 ₸/м², коммерчески округляется до ближайших 50 000 ₸.
+   const premiumInstall=Math.round((area*40000)/50000)*50000;
+   base+=premiumInstall+pc.price;
+
+   // CPS2.5: retain the reference frame, but use current dealer control prices.
+   if(p==='P2.5'){
+     base+=3*10600 + 4*275 + 13*2100;
+   }
+
+   // CPS1.8: 320×480 Absen panels + 2 spare panels.
+   // Construction consumables follow the same CPS cabinet-frame rule as CPS2.5.
+   if(p==='P1.8'){
+     const profileQty=Math.max(1,Math.ceil(g.aw/2));
+     const ironQty=Math.max(1,g.cols+1);
+     base+=profileQty*10600 + 4*275 + ironQty*2100;
+   }
+
+   // KLCOB1.2 V2 is already a complete die-cast aluminium cabinet.
+   // Do not add a second aluminium cabinet/frame product to its hardware cost.
+
+
+   if(d.powerMaxM2){maxPowerW=area*d.powerMaxM2;avgPowerW=area*d.powerAvgM2;}
+ } else if(t==='rental'){
+   psu=g.units*2;cards=g.units;
+   control=controlSelection(pxW,pxH,els.control.value);
+   base=area*d.rentalM2+area*40000+control.price;maxPowerW=psu*200;avgPowerW=maxPowerW/2;
+ } else if(b==='cabinet'&&t==='outdoor'){
+   workingModules=g.units*d.modulesPerCab; psu=g.units*d.psuPerCab; cards=g.units;
+   control=controlSelection(pxW,pxH,els.control.value);
+   base=(workingModules+spare)*d.modulePrice + cards*d.cardPrice + g.units*d.cabinetPrice + psu*2800 + control.price + installCabinet(area);
+   maxPowerW=psu*200;avgPowerW=maxPowerW/2;
+ } else if(b==='cabinet'&&t==='indoor'){
+   workingModules=g.units*d.modulesPerCab; psu=Math.ceil(workingModules/d.psuDiv); cards=g.units;
+   base=(workingModules+spare)*d.modulePrice + psu*d.psuPrice + cards*d.cardPrice + g.units*d.cabinetPrice;
+   control=controlSelection(pxW,pxH,els.control.value);
+   base+=area*60000+control.price;
+   maxPowerW=psu*200;avgPowerW=maxPowerW/2;
+ } else {
+   workingModules=g.units;
+   installation=modularInstallation(area,t,els.mount.value);
+ // P2.5 R716 and RGB PSU tariffs follow the current dealer price.
+   if(t==='indoor'&&p==='P2.5'){
+     spare=4; psu=Math.ceil(workingModules/6);
+     receiving=receiverLayout(g,g.cols,6700,false);cards=receiving.count;
+     control=controlSelection(pxW,pxH,els.control.value);
+     base=(workingModules+spare)*d.modulePrice + psu*d.psuPrice + receiving.cost;
+     base+=control.price + Math.ceil(2*(g.aw+g.ah)/6)*12000 + 4*250 + (g.cols+1)*2100 + workingModules*4*30;
+     base+=installation;
+   } else if(t==='indoor'&&p==='P4'){
+     breakdown=indoorP4Estimate(g,els.mount.value);
+     spare=breakdown.spare;
+     psu=breakdown.psu;
+     cards=breakdown.cards;
+     control=breakdown.control;
+     receiving=breakdown.receiving;
+     base=breakdown.base;
+   } else {
+     psu=Math.ceil(workingModules/d.psuDiv);
+     const groups=(t==='outdoor'&&p==='P5')?Math.ceil(g.cols/2):g.cols;
+     receiving=receiverLayout(g,groups,d.cardPrice,false);cards=receiving.count;
+     base=(workingModules+spare)*d.modulePrice + psu*d.psuPrice + receiving.cost;
+     if(t==='outdoor'&&p==='P5'){
+       base+=Math.ceil(2*(g.aw+g.ah)/6)*9500+4*275+(g.cols+1)*1800+workingModules*8*5;
+     }
+     base+=installation;
+     control=controlSelection(pxW,pxH,els.control.value);
+     base+=control.price;
+   }
+   maxPowerW=psu*200;avgPowerW=maxPowerW/2;
+ }
+ if(control)processorName=control.name;
+ const valid=!control||control.valid;
+ return {g,area,workingModules,spare,psu,cards,processorName,maxPowerW,avgPowerW,baseCost:valid?Math.round(base):null,breakdown,installation,control,receiving,valid,reason:control&&!valid?control.reason:'',price:valid?Math.round(base*MARKUP):null};
+}
+function duration(area){
+ if(els.type.value==='outdoor'&&els.build.value==='cabinet'&&els.mount.value==='stand'){
+  if(area>100)return'После эскизного проекта'; return `${Math.max(2,Math.ceil(area/10)+1)} рабочих дня`;
+ }
+ if(area<=12)return'1 рабочий день'; if(area<=20)return'2 рабочих дня'; return'Уточняется по проекту';
+}
+function calc(){
+ try{
+  
+  const r=compute(),g=r.g,d=g.d,pxW=g.cols*d.pxw,pxH=g.rows*d.pxh;
+  $('totalPrice').textContent=r.price===null?'По проекту':r.price.toLocaleString('ru-RU')+' ₸';
+  $('priceCheck').textContent=r.reason||'';
+  $('size').textContent=`${g.aw.toFixed(2)} × ${g.ah.toFixed(2)} м`;
+  $('actual').textContent=$('size').textContent;$('area').textContent=r.area.toFixed(2)+' м²';
+  $('resolution').textContent=`${pxW.toLocaleString('ru-RU')} × ${pxH.toLocaleString('ru-RU')} px`;
+  $('pixels').textContent=(pxW*pxH).toLocaleString('ru-RU')+' px';
+  $('maxPower').textContent=r.maxPowerW?(r.maxPowerW/1000).toFixed(2)+' кВт':'По паспорту проекта';$('avgPower').textContent=r.avgPowerW?(r.avgPowerW/1000).toFixed(2)+' кВт':'По паспорту проекта';
+  $('time').textContent=duration(r.area);$('rType').textContent=DATA[els.type.value].label;$('rBuild').textContent=DATA[els.type.value].builds[els.build.value].label;$('rPitch').textContent=els.pitch.value;$('rMount').textContent=els.mount.value==='stand'?'Отдельно стоящая конструкция':'Стена / фасад';$('service').textContent=els.build.value==='module'?'Front Service':'Rear Service';els.control.disabled=false;if(els.type.value==='premium'){$('rControl').textContent=(els.control.value==='sync'?'Синхронное':'Асинхронное')+' · NovaStar';}else{$('rControl').textContent=els.control.value==='sync'?'Синхронное':'Асинхронное';}
+  $('buildHint').textContent=els.type.value==='premium'?'Кабинетный Indoor Premium: Absen, управление NovaStar.':(els.build.value==='cabinet'?(els.type.value==='indoor'&&els.pitch.value==='P4'?'Экран собирается из кабинетов 768×768 мм.':'Экран собирается из готовых кабинетов.'):(els.type.value==='indoor'&&els.pitch.value==='P4'?'Экран собирается из LED-модулей 256×256 мм.':'Экран собирается из LED-модулей 320×160 мм.'));
+  $('pitchHint').textContent=`Ориентировочная комфортная дистанция просмотра — от ${parseFloat(els.pitch.value.slice(1))} м.`;
+  $('controlHint').textContent=els.control.value==='sync'?'Контент поступает в реальном времени от источника сигнала.':'Контроллер хранит контент и воспроизводит его самостоятельно.';
+  $('recommend').textContent=`Фактический размер по сетке: ${g.aw.toFixed(2)} × ${g.ah.toFixed(2)} м`;
+  const items=[];
+  const add=(a,b)=>items.push(`<li><span>${a}</span><b>${b}</b></li>`);
+  if(els.build.value==='cabinet')add(els.type.value==='premium'?(d.family+' — кабинеты'):'Кабинеты',g.units+' шт.');
+  if(r.workingModules)add('Рабочие LED-модули',r.workingModules+' шт.');
+  if(r.spare)add('Запасные LED-модули',r.spare+' шт.');
+  if(els.type.value==='premium'){add('Корпус / кабинет','в составе Absen');add('Питание и принимающая электроника','в составе конфигурации Absen');}else{add('Блоки питания',r.psu+' шт.');add('Принимающие карты',r.receiving&&r.receiving.extra?r.cards+' шт. ('+r.receiving.main+' основных + '+r.receiving.extra+' R708)':r.cards+' шт.');}
+  if(els.type.value==='premium')add(els.control.value==='sync'?'Видеопроцессор NovaStar':'Управление NovaStar',r.processorName); else add(els.control.value==='sync'?'Контроллер / видеопроцессор':'Асинхронный контроллер',r.processorName||'1 шт.');
+  add('Силовая и сигнальная коммутация','по проекту');add('Монтажная конструкция','по объекту');
+  $('bom').innerHTML=items.join('');
+ }catch(e){console.error('Ошибка расчёта:',e);}
+}
+els.type.addEventListener('change',populateBuild);els.build.addEventListener('change',populatePitch);
+[els.pitch,els.format,els.w,els.h,els.control,els.mount].forEach(e=>{e.addEventListener('input',calc);e.addEventListener('change',calc)});
+populateBuild();
+})();
+
+</script></body></html>
